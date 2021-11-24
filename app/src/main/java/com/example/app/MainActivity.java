@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
-
+import org.mariuszgromada.math.mxparser.*;
 public class MainActivity extends AppCompatActivity {
 
     private EditText display;
@@ -26,13 +26,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //private void updateText(String strToAdd){
-        //String oldStr = display.getText().toString();
-        //int cursorPos = display.getSelectionStart();
-        //String leftstr = oldStr.substring(0,cursorPos);
-       // String rightstr = oldStr.substring(cursorPos);
-       // display.setText(String.format("%s%s%s",leftstr,strToAdd,rightstr));
-    //}//
+
 
     private void updateText(String strToAdd){
         String oldStr = display.getText().toString();
@@ -127,7 +121,14 @@ public class MainActivity extends AppCompatActivity {
         updateText( ".");
     }
     public void equalbtn(View View){
+        String userExp = display.getText().toString();
+        userExp = userExp.replaceAll("÷", "/");
+        userExp = userExp.replaceAll("x", "*");
 
+        Expression exp = new Expression(userExp);
+        String result = String.valueOf(exp.calculate());
+        display.setText(result);
+        display.setSelection(result.length());
     }
     public void backbtn(View View){
         int cursorPos = display.getSelectionStart();
